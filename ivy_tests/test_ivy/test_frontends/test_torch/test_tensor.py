@@ -9880,10 +9880,7 @@ def test_torch_instance_addcdiv_(
     class_tree=CLASS_TREE,
     init_tree="torch.tensor",
     method_name="cholesky",
-    dtype_and_x=helpers.dtype_and_values(
-        available_dtypes=helpers.get_dtypes("float"),
-        square=True,
-    ),
+    dtype_and_x=_get_dtype_and_matrix(square=True),
     upper=st.booleans(),
 )
 def test_torch_instance_cholesky(
@@ -10042,7 +10039,7 @@ def test_torch_instance_tile(
     ),
     dim=st.integers(min_value=0, max_value=3),
     dtype_and_indices=helpers.dtype_and_values(
-        available_dtypes=helpers.get_dtypes("int"),
+        available_dtypes=helpers.get_dtypes("integer"),
         shape=st.shared(helpers.get_shape(), key="indices_shape"),
     ),
     dtype_and_src=helpers.dtype_and_values(
@@ -10096,7 +10093,7 @@ def test_torch_instance_scatter_(
     ),
     dim=st.integers(min_value=0, max_value=3),
     dtype_and_indices=helpers.dtype_and_values(
-        available_dtypes=helpers.get_dtypes("int"),
+        available_dtypes=helpers.get_dtypes("integer"),
         shape=st.shared(helpers.get_shape(), key="indices_shape"),
     ),
     dtype_and_src=helpers.dtype_and_values(
@@ -10147,7 +10144,7 @@ def test_torch_instance_scatter_add_(
     ),
     dim=st.integers(min_value=0, max_value=3),
     dtype_and_indices=helpers.dtype_and_values(
-        available_dtypes=helpers.get_dtypes("int"),
+        available_dtypes=helpers.get_dtypes("integer"),
         shape=st.shared(helpers.get_shape(), key="indices_shape"),
     ),
     dtype_and_src=helpers.dtype_and_values(
@@ -10179,7 +10176,7 @@ def test_torch_instance_scatter_reduce_(
         init_input_dtypes=x_dtype,
         method_input_dtypes=x_dtype,
         init_all_as_kwargs_np={
-            "data": x,
+            "data": x[0],
         },
         method_all_as_kwargs_np={
             "dim": dim,

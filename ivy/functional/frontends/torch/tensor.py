@@ -1506,13 +1506,13 @@ class Tensor:
                 reduce = "sum"
             elif reduce == "multiply":
                 reduce = "prod"
-        self.ivy_array = ivy.scatter_nd(indices=index, updates=src, reduction=reduce, out=self)
+        self.ivy_array = ivy.scatter_nd(index, src, reduction=reduce, out=self)
         return self
 
     scatter = scatter_
 
     def scatter_add_(self, dim, index, src):
-        self.ivy_array = ivy.scatter_nd(indices=index, updates=src, reduction="sum", out=self)
+        self.ivy_array = ivy.scatter_nd(index, src, reduction="sum", out=self)
         return self
 
     scatter_add = scatter_add_
@@ -1527,10 +1527,12 @@ class Tensor:
             reduce = "max"
         elif reduce == "amin":
             reduce = "min"
+
         if include_self:
-            self.ivy_array = ivy.scatter_nd(indices=index, updates=src, reduction=reduce, out=self)
+            self.ivy_array = ivy.scatter_nd(index, src, reduction=reduce, out=self)
         else:
-            self.ivy_array = ivy.scatter_nd(indices=index, updates=src, reduction=reduce, out=None)
+            self.ivy_array = ivy.scatter_nd(index, src, reduction=reduce, out=None)
+
         return self
 
     def scatter_reduce(self, dim, index, src, reduce, include_self=True):
